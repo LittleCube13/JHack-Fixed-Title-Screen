@@ -24,7 +24,8 @@ public class RomMem extends AbstractRom
      * @see #write(int, int)
      * @see #read(int)
      */
-    private byte[] rom;
+    protected byte[] rom;
+    protected static TitletoCCS app = new TitletoCCS();
 
     protected void readFromRom(File rompath) throws FileNotFoundException,
         IOException
@@ -54,9 +55,57 @@ public class RomMem extends AbstractRom
         try
         {
             FileOutputStream out = new FileOutputStream(rompath);
+            if (length() == 0x400200) {
+            rom[0xef6b] = rom[0xeec6];
+			rom[0xef6c] = rom[0xeec7];
+			rom[0xef6d] = rom[0xeec8];
+			rom[0xef6e] = rom[0xeec9];
+			rom[0xef6f] = rom[0xeeca];
+			rom[0xef70] = rom[0xeecb];
+			rom[0xef71] = rom[0xeecc];
+			rom[0xef72] = rom[0xeecd];
+			rom[0xef73] = rom[0xeece];
+			rom[0xef74] = rom[0xeecf];
+		} else if (length() == 0x400000) {
+			rom[0xed6b] = rom[0xecc6];
+			rom[0xed6c] = rom[0xecc7];
+			rom[0xed6d] = rom[0xecc8];
+			rom[0xed6e] = rom[0xecc9];
+			rom[0xed6f] = rom[0xecca];
+			rom[0xed70] = rom[0xeccb];
+			rom[0xed71] = rom[0xeccc];
+			rom[0xed72] = rom[0xeccd];
+			rom[0xed73] = rom[0xecce];
+			rom[0xed74] = rom[0xeccf];
+		}
+            if (length() == 0x600200) {
+            rom[0xef6b] = rom[0xeec6];
+			rom[0xef6c] = rom[0xeec7];
+			rom[0xef6d] = rom[0xeec8];
+			rom[0xef6e] = rom[0xeec9];
+			rom[0xef6f] = rom[0xeeca];
+			rom[0xef70] = rom[0xeecb];
+			rom[0xef71] = rom[0xeecc];
+			rom[0xef72] = rom[0xeecd];
+			rom[0xef73] = rom[0xeece];
+			rom[0xef74] = rom[0xeecf];
+		} else if (length() == 0x600000) {
+			rom[0xed6b] = rom[0xecc6];
+			rom[0xed6c] = rom[0xecc7];
+			rom[0xed6d] = rom[0xecc8];
+			rom[0xed6e] = rom[0xecc9];
+			rom[0xed6f] = rom[0xecca];
+			rom[0xed70] = rom[0xeccb];
+			rom[0xed71] = rom[0xeccc];
+			rom[0xed72] = rom[0xeccd];
+			rom[0xed73] = rom[0xecce];
+			rom[0xed74] = rom[0xeccf];
+		}
             out.write(this.rom);
             out.close();
-        }
+//          File fi = new File(rompath.getParent() + "/title_screen.ccs");
+//          app.CCSFile(this.rom, fi);
+		}
         catch (FileNotFoundException e)
         {
             System.err.println("Error: File not saved: File not found.");

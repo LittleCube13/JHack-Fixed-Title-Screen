@@ -15,7 +15,8 @@ import java.io.RandomAccessFile;
  */
 public class RomFileIO extends AbstractRom
 {
-    RandomAccessFile rom;
+    public RandomAccessFile rom;
+    public static RandomAccessFile newRom;
 
     /*
      * (non-Javadoc)
@@ -228,14 +229,59 @@ public class RomFileIO extends AbstractRom
         {
             try
             {
-                RandomAccessFile newRom = new RandomAccessFile(rompath, "rwd");
+                byte[] b = new byte[(int) rom.length()];
+                if (length() == 0x400200) {
+				b[0xef6b] = b[0xeec6];
+				b[0xef6c] = b[0xeec7];
+				b[0xef6d] = b[0xeec8];
+				b[0xef6e] = b[0xeec9];
+				b[0xef6f] = b[0xeeca];
+				b[0xef70] = b[0xeecb];
+				b[0xef71] = b[0xeecc];
+				b[0xef72] = b[0xeecd];
+				b[0xef73] = b[0xeece];
+				b[0xef74] = b[0xeecf];
+				} else if (length() == 0x400000) {
+				b[0xed6b] = b[0xecc6];
+				b[0xed6c] = b[0xecc7];
+				b[0xed6d] = b[0xecc8];
+				b[0xed6e] = b[0xecc9];
+				b[0xed6f] = b[0xecca];
+				b[0xed70] = b[0xeccb];
+				b[0xed71] = b[0xeccc];
+				b[0xed72] = b[0xeccd];
+				b[0xed73] = b[0xecce];
+				b[0xed74] = b[0xeccf];
+				}
+                if (length() == 0x600200) {
+				b[0xef6b] = b[0xeec6];
+				b[0xef6c] = b[0xeec7];
+				b[0xef6d] = b[0xeec8];
+				b[0xef6e] = b[0xeec9];
+				b[0xef6f] = b[0xeeca];
+				b[0xef70] = b[0xeecb];
+				b[0xef71] = b[0xeecc];
+				b[0xef72] = b[0xeecd];
+				b[0xef73] = b[0xeece];
+				b[0xef74] = b[0xeecf];
+				} else if (length() == 0x600000) {
+				b[0xed6b] = b[0xecc6];
+				b[0xed6c] = b[0xecc7];
+				b[0xed6d] = b[0xecc8];
+				b[0xed6e] = b[0xecc9];
+				b[0xed6f] = b[0xecca];
+				b[0xed70] = b[0xeccb];
+				b[0xed71] = b[0xeccc];
+				b[0xed72] = b[0xeccd];
+				b[0xed73] = b[0xecce];
+				b[0xed74] = b[0xeccf];
+				}
+				newRom = new RandomAccessFile(rompath, "rwd");
                 rom.seek(0);
                 newRom.seek(0);
-                byte[] b = new byte[(int) rom.length()];
-                rom.read(b);
+				rom.read(b);
                 newRom.write(b);
                 rom = newRom;
-
                 path = rompath;
             }
             catch (FileNotFoundException e)
